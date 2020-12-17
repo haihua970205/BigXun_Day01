@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <SearchView
+            android:id="@+id/search"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <com.youth.banner.Banner
+            android:id="@+id/banner"
+            android:background="#D5A2A2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_200"/>
+        <LinearLayout
+            android:id="@+id/tab"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_5"
+            android:background="#E3E3E3"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txt_brand_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="品牌制作商直供"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_10"></TextView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recy_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txt_newgood_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="周一周四·新品首发"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_10"></TextView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recy_newgood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_5"
+            android:background="#E3E3E3"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_pop_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_10"
+                android:text="人气推荐"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recy_pop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_5"
+            android:background="#E3E3E3"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_tit_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_10"
+                android:text="专题精选"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recy_tit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_5"
+            android:background="#E3E3E3"></View>
+
+        <LinearLayout
+            android:id="@+id/linesr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

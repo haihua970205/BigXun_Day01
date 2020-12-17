@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:id="@+id/liner"
+    android:layout_marginLeft="@dimen/dp_20"
+    android:layout_marginRight="@dimen/dp_20"
+    android:paddingVertical="@dimen/dp_5"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="@dimen/dp_350"
+    android:layout_height="@dimen/dp_250">
+    <ImageView
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="@dimen/dp_200"
+        android:src="@mipmap/ic_menu_me_nor"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:id="@+id/new_pic_url">
+    </ImageView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/dp_2"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sssss"
+            android:textSize="@dimen/sp_12"
+            android:id="@+id/name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sssss"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:textSize="@dimen/sp_10"
+            android:id="@+id/floor_price"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_margin="@dimen/dp_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sssss"
+        android:enabled="true"
+        android:textSize="@dimen/sp_10"
+        android:id="@+id/goods_brief"/>
+
+
+</LinearLayout>
