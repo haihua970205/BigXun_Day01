@@ -37,6 +37,8 @@ dependencies {
     //bottom navigation
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
+    //刷新的依赖
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
@@ -74,7 +76,7 @@ dependencies {
     implementation 'com.jaeger.ninegridimageview:library:1.0.2'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     //本地相机相册选择图片
-    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.3'
+//    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.3'
 
 
     //极光
@@ -92,7 +94,7 @@ dependencies {
     api 'com.hyphenate:hyphenate-sdk:3.6.8'*/
 
     //oss
-    implementation 'com.aliyun.dpa:oss-android-sdk:+'
+    //implementation 'com.aliyun.dpa:oss-android-sdk:+'
 
 
 }

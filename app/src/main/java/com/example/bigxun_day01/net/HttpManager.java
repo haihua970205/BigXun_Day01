@@ -69,7 +69,6 @@ public class HttpManager {
      * 拦截的头处理
      */
     static class HeaderInterceptor implements Interceptor{
-
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request().newBuilder()

@@ -1,6 +1,7 @@
 package com.example.bigxun_day01.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,9 @@ import com.example.bigxun_day01.base.BaseFragment;
 import com.example.bigxun_day01.interfaces.home.IHome;
 import com.example.bigxun_day01.model.home.bean.HomeBean;
 import com.example.bigxun_day01.presenter.home.HomePresenter;
+import com.example.bigxun_day01.ui.home.brand.BrandInfoActivity;
+import com.example.bigxun_day01.ui.home.lookvideo.LookInfoActivity;
+import com.example.bigxun_day01.ui.home.newgoods.NewGoodListActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -49,13 +53,7 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
     private RecyclerView mRecyTit;
     private LinearLayout mLinesr;
     private NewGoodsListAdapter newGoodsListAdapter;
-    //    private NewGoodsAdapter newGoodsAdapter;
-    /* @BindView(R.id.search)
-    SearchView mSearch;
-    @BindView(R.id.banner)
-    Banner mBanner;
-    @BindView(R.id.tab)
-    ConstraintLayout mTab;*/
+
 
     @Override
     protected int getLayout() {
@@ -92,6 +90,20 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
         newGoodsListAdapter = new NewGoodsListAdapter(getActivity(), newGoodList);
         mRecyBrand.setAdapter(brandAdapter);
         mRecyNewgood.setAdapter(newGoodsListAdapter);
+
+        mTxtNewgoodTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), NewGoodListActivity.class));
+            }
+        });
+        mTxtBrandTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), BrandInfoActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -171,10 +183,13 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
             channel.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
             mTab.addView(channel);
             mTab.setTag(item);
+//          Log.e("TAG", "initTab: "+item.getName()+item.getId());
             mTab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(getActivity(), LookInfoActivity.class);
+                    intent.putExtra("cid", item.getId());
+                    startActivity(intent);
                 }
             });
         }

@@ -15,7 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.lookvideo.LookInfoActivity"></activity>
+        <activity android:name=".ui.home.newgoods.NewGoodListActivity"/>
+        <activity android:name=".ui.home.brand.InfoShopBrandActivity"></activity>
+        <activity android:name=".ui.home.lookvideo.LookInfoActivity" />
+        <activity android:name=".ui.home.brand.BrandInfoActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

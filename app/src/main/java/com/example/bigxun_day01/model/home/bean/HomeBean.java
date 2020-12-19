@@ -200,6 +200,7 @@ public class HomeBean {
 
         public static class ChannelBean {
             /**
+             *
              * id : 1
              * name : 居家
              * url : /pages/category/category?id=1005000
