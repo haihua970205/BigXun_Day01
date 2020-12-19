@@ -146,7 +146,9 @@ public class NewGoodListActivity extends BaseActivity<NewGoodPresenter> implemen
                 PopupWindow popupWindow = new PopupWindow(popup, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 popupWindow.setBackgroundDrawable(new ColorDrawable());
                 popupWindow.setOutsideTouchable(true);
-                popupWindow.showAtLocation(rl, Gravity.CENTER,10,0);
+                RecyclerView sort = popup.findViewById(R.id.pop_recycle_sort);
+
+                popupWindow.showAtLocation(rl, Gravity.CENTER,0,0);
                 break;
         }
     }

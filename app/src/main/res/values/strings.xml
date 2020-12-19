@@ -5,7 +5,7 @@
     <string name="bar_name_sort">分类</string>
     <string name="bar_name_shop">购物车</string>
     <string name="bar_name_my">我的</string>
-    <string name="good_list_name_all">我的</string>
-    <string name="good_list_name_price">我的</string>
-    <string name="good_list_name_sort">我的</string>
+    <string name="good_list_name_all">综合</string>
+    <string name="good_list_name_price">价格</string>
+    <string name="good_list_name_sort">分类</string>
 </resources>
