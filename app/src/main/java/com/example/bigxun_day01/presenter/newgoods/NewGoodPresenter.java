@@ -10,13 +10,6 @@ import com.example.bigxun_day01.model.newgoods.NewGoodOlderBean;
 
 import java.util.Map;
 
-/**
- * @Author: 王世凯
- * @Time: 2020/12/18 16:44
- * @Company：公司名称
- * @Description: 功能描述
- */
-
 public class NewGoodPresenter extends BasePresenter<NewGood.NewGoodView> implements NewGood.NewGoodPresenter {
     NewGood.NewGoodView view;
     NewGood.NewGoodModel model;

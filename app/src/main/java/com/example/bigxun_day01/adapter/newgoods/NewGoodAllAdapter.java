@@ -11,12 +11,6 @@ import com.example.bigxun_day01.model.newgoods.NewGoodAllBean;
 
 import java.util.List;
 
-/**
- * @Author: 王世凯
- * @Time: 2020/12/18 18:32
- * @Company：公司名称
- * @Description: 功能描述
- */
 public class NewGoodAllAdapter extends BaseAdapter<NewGoodAllBean.DataBeanX.GoodsListBean> {
 
     Context context;

@@ -1,11 +1,5 @@
 package com.example.bigxun_day01.model.newgoods;
 
-/**
- * @Author: 王世凯
- * @Time: 2020/12/18 16:38
- * @Company：公司名称
- * @Description: 功能描述
- */
 public class NewGoodFristBean {
     /**
      * errno : 0

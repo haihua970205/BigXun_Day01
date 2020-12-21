@@ -12,12 +12,6 @@ import com.example.bigxun_day01.model.newgoods.NewGoodOlderBean;
 
 import java.util.Map;
 
-/**
- * @Author: 王世凯
- * @Time: 2020/12/18 16:39
- * @Company：公司名称
- * @Description: 功能描述
- */
 public interface NewGood {
     interface NewGoodView extends IBaseView {
         void getTopBackgroundReturn(NewGoodFristBean result);

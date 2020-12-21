@@ -23,6 +23,7 @@ import com.example.bigxun_day01.adapter.home.CategoryListAdapter;
 import com.example.bigxun_day01.adapter.home.HotGoodsAdapter;
 import com.example.bigxun_day01.adapter.home.NewGoodsListAdapter;
 import com.example.bigxun_day01.adapter.home.TopicListAdapter;
+import com.example.bigxun_day01.base.BaseAdapter;
 import com.example.bigxun_day01.base.BaseFragment;
 import com.example.bigxun_day01.interfaces.home.IHome;
 import com.example.bigxun_day01.model.home.bean.HomeBean;
@@ -30,6 +31,8 @@ import com.example.bigxun_day01.presenter.home.HomePresenter;
 import com.example.bigxun_day01.ui.home.brand.BrandInfoActivity;
 import com.example.bigxun_day01.ui.home.lookvideo.LookInfoActivity;
 import com.example.bigxun_day01.ui.home.newgoods.NewGoodListActivity;
+//import com.example.bigxun_day01.ui.newshopinfo.NewShopInfoActivity;
+import com.example.bigxun_day01.ui.newshopinfo.NewShopInfoActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -90,6 +93,15 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
         newGoodsListAdapter = new NewGoodsListAdapter(getActivity(), newGoodList);
         mRecyBrand.setAdapter(brandAdapter);
         mRecyNewgood.setAdapter(newGoodsListAdapter);
+        newGoodsListAdapter.addListClick(new BaseAdapter.IListClick() {
+            @Override
+            public void itemClick(int pos) {
+                int id = newGoodList.get(pos).getId();
+                Intent intent = new Intent(getActivity(), NewShopInfoActivity.class);
+                intent.putExtra("infoId", id);
+                startActivity(intent);
+            }
+        });
 
         mTxtNewgoodTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,10 +148,18 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
             recy_home.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
             CategoryListAdapter categoryListAdapter = new CategoryListAdapter(getActivity(), goodsList1);
-
             recy_home.setAdapter(categoryListAdapter);
-
             mLinesr.addView(view);
+     //专题列表的跳转监听
+            /* categoryListAdapter.addListClick(new BaseAdapter.IListClick() {
+                @Override
+                public void itemClick(int pos) {
+                    int id = goodsList1.get(pos).getId();
+                    Intent intent = new Intent(getActivity(),);
+                    intent.putExtra("styleId",id);
+                    startActivity(intent);
+                }
+            });*/
 
         }
     }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -20,13 +21,13 @@ import com.bumptech.glide.Glide;
 import com.example.bigxun_day01.R;
 import com.example.bigxun_day01.adapter.newgoods.NewGoodAllAdapter;
 import com.example.bigxun_day01.adapter.newgoods.NewGoodOlderAdapter;
+import com.example.bigxun_day01.adapter.newgoods.PopAdapter;
 import com.example.bigxun_day01.base.BaseActivity;
 import com.example.bigxun_day01.interfaces.newgoods.NewGood;
 import com.example.bigxun_day01.model.newgoods.NewGoodAllBean;
 import com.example.bigxun_day01.model.newgoods.NewGoodFristBean;
 import com.example.bigxun_day01.model.newgoods.NewGoodOlderBean;
 import com.example.bigxun_day01.presenter.newgoods.NewGoodPresenter;
-
 
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,9 @@ public class NewGoodListActivity extends BaseActivity<NewGoodPresenter> implemen
     ImageView newGoodSelected;
     @BindView(R.id.rl)
     RelativeLayout rl;
+    private PopAdapter popAdapter;
+    private List<NewGoodAllBean.DataBeanX.FilterCategoryBean> popList1;
+
     @Override
     protected int getLayout() {
         return R.layout.activity_new_good_list;
@@ -143,15 +147,28 @@ public class NewGoodListActivity extends BaseActivity<NewGoodPresenter> implemen
                 presenter.resultNewGoodAllBean(sortMap);
 
                 View popup = LayoutInflater.from(this).inflate(R.layout.layout_newgood_popup, null);
-                PopupWindow popupWindow = new PopupWindow(popup, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                PopupWindow popupWindow = new PopupWindow(popup, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 popupWindow.setBackgroundDrawable(new ColorDrawable());
                 popupWindow.setOutsideTouchable(true);
+                popupWindow.showAsDropDown(newGoodListTabSelect, Gravity.CENTER_HORIZONTAL,0,0);
                 RecyclerView sort = popup.findViewById(R.id.pop_recycle_sort);
+                sort.setLayoutManager(new GridLayoutManager(this,5));
+                if (popList1.size()>0){
+                    popAdapter = new PopAdapter(this, popList1);
+                    sort.setAdapter(popAdapter);
 
-                popupWindow.showAtLocation(rl, Gravity.CENTER,0,0);
+                   /* popAdapter.addListClick(new BaseAdapter.IListClick() {
+                        @Override
+                        public void itemClick(int pos) {
+                            boolean checked = popList1.get(pos).isChecked();
+
+                        }
+                    });*/
+                }
                 break;
         }
     }
+
 
     @SuppressLint("ResourceType")
     private void selectDown() {
@@ -214,6 +231,8 @@ public class NewGoodListActivity extends BaseActivity<NewGoodPresenter> implemen
         if (result!=null){
             List<NewGoodAllBean.DataBeanX.GoodsListBean> data = result.getData().getGoodsList();
             initAllData(data);
+            popList1 = result.getData().getFilterCategory();
+
         }
     }
 
@@ -222,6 +241,7 @@ public class NewGoodListActivity extends BaseActivity<NewGoodPresenter> implemen
         NewGoodAllAdapter newGoodAllAdapter = new NewGoodAllAdapter(this, data);
         newGoodListRcy.setAdapter(newGoodAllAdapter);
         newGoodAllAdapter.notifyDataSetChanged();
+
     }
 
     private void initBindData(List<NewGoodOlderBean.DataBeanX.GoodsListBean> goodsList) {
@@ -230,6 +250,5 @@ public class NewGoodListActivity extends BaseActivity<NewGoodPresenter> implemen
         newGoodListRcy.setAdapter(newGoodOlderAdapter);
         newGoodOlderAdapter.notifyDataSetChanged();
     }
-
 
 }

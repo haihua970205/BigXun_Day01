@@ -11,12 +11,6 @@ import java.util.Map;
 
 import io.reactivex.disposables.Disposable;
 
-/**
- * @Author: 王世凯
- * @Time: 2020/12/18 16:42
- * @Company：公司名称
- * @Description: 功能描述
- */
 public class NewGoodModel extends BaseModel implements NewGood.NewGoodModel {
     @Override
     public void loadTopBackground(Callback callback) {
