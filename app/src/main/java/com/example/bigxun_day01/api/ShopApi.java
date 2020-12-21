@@ -10,6 +10,8 @@ import com.example.bigxun_day01.model.newgoods.NewGoodFristBean;
 import com.example.bigxun_day01.model.newgoods.NewGoodOlderBean;
 import com.example.bigxun_day01.model.newshopinfo.ShopInfoBean;
 import com.example.bigxun_day01.model.newshopinfo.ShopLookAllBean;
+import com.example.bigxun_day01.ui.sort.InfoTabDataBean;
+import com.example.bigxun_day01.ui.sort.VerTabBean;
 
 import java.util.Map;
 
@@ -60,11 +62,22 @@ public interface ShopApi {
     //    https://cdplay.cn/api/goods/list?isNew=1&page=1&size=1000
     @GET("goods/list")
     Flowable<NewGoodAllBean> getNewGoodAllBean(@QueryMap Map<String, String> map);
-//https://cdplay.cn/api/goods/detail?id=1155000
+
+    //https://cdplay.cn/api/goods/detail?id=1155000
     //新商品点击跳转穿id
     @GET(" api/goods/detail")
-    Flowable<ShopInfoBean> getShopInfo(@Query("id")int id);
-    @GET("api/goods/related")
-    Flowable<ShopLookAllBean> getLookAll(@Query("id")int id);
+    Flowable<ShopInfoBean> getShopInfo(@Query("id") int id);
 
+    @GET("api/goods/related")
+    Flowable<ShopLookAllBean> getLookAll(@Query("id") int id);
+//分类
+//https://cdplay.cn/api/catalog/index
+
+    @GET("api/catalog/index")
+    Flowable<VerTabBean> getTab();
+
+    //分类右边数据
+//https://cdplay.cn/api/catalog/current?id=1005001
+    @GET("api/catalog/current")
+    Flowable<InfoTabDataBean> getTabInfo(@Query("id") int id);
 }

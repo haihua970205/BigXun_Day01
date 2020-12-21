@@ -3,6 +3,7 @@ package com.example.bigxun_day01.ui.newshopinfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -31,9 +33,13 @@ import com.example.bigxun_day01.presenter.newshopinfo.ShopInfoPresenter;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> implements IShopInfo.View {
     @BindView(R.id.banner)
@@ -46,8 +52,7 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
     TextView carRetailPrice;
     @BindView(R.id.txt_assess)
     TextView txtAssess;
-    @BindView(R.id.webView)
-    WebView webView;
+
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
     @BindView(R.id.img_collect)
@@ -72,11 +77,14 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
     LinearLayout llIss;
     @BindView(R.id.rlv_product)
     RecyclerView rlvProduct;
+    @BindView(R.id.webView)
+    WebView webView;
 
     @Override
     protected int getLayout() {
         return R.layout.activity_new_shop_info;
     }
+
     private String h5 = "<html>\n" +
             "            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\"/>\n" +
             "            <head>\n" +
@@ -136,12 +144,28 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
         //底部数据列表
         initProduct(carBean.getData().getProductList());
     }
-    private void initGoodDetail(String webData) {
-        String content = h5.replace("word", webData);
-        Log.i("TAG", content);
-        webView.loadDataWithBaseURL("about:blank", content, "text/html", "utf-8", null);
-    }
 
+     private void initGoodDetail(String webData) {
+         getHtmlImgs(webData);
+         String content = h5.replace("word", webData);
+         Log.i("TAG", content);
+         webView.loadDataWithBaseURL("about:blank", content, "text/html", "utf-8", null);
+     }
+    private void getHtmlImgs(String content) {
+        String img = "<img[\\s\\S]*?>";
+        Pattern pattern = Pattern.compile(img);
+        Matcher matcher = pattern.matcher(content);
+        List<String> list = new ArrayList<>();
+        while (matcher.find()) {
+            String word = matcher.group();
+            int start = word.indexOf("\"") + 1;
+            int end = word.indexOf(".jpg");
+            String url = word.substring(start, end);
+            url = url + ".jpg";
+            list.add(url);
+        }
+//        Log.e("TAG", "getHtmlImgs: "+list.size() );
+    }
 
     private void initBanner(List<ShopInfoBean.DataBeanX.GalleryBean> gallery) {
         banner.setImages(gallery).setImageLoader(new ImageLoader() {
@@ -186,6 +210,7 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
             llIss.addView(view);
         }
     }
+
     private void initProduct(List<ShopInfoBean.DataBeanX.ProductListBean> productList) {
         //获取要传的id
         for (int i = 0; i < productList.size(); i++) {
@@ -193,13 +218,20 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
             presenter.getLookAll(id);
         }
     }
+
     @Override
     public void getLookAllReturn(ShopLookAllBean relateBean) {
         List<ShopLookAllBean.DataBean.GoodsListBean> goodsList = relateBean.getData().getGoodsList();
-        rlvProduct.setLayoutManager(new GridLayoutManager(this,2));
+        rlvProduct.setLayoutManager(new GridLayoutManager(this, 2));
         Car_Product_Adapter car_product_adapter = new Car_Product_Adapter(this, goodsList);
         rlvProduct.setAdapter(car_product_adapter);
         car_product_adapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

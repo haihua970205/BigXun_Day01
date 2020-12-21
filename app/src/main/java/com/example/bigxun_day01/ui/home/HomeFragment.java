@@ -83,7 +83,7 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
         mTxtNewgoodTitle = (TextView) getActivity().findViewById(R.id.txt_newgood_title);
         mRecyNewgood = (RecyclerView) getActivity().findViewById(R.id.recy_newgood);
 
-
+// 新品    品牌制造商
         mRecyBrand.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyNewgood.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
@@ -150,16 +150,16 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
             CategoryListAdapter categoryListAdapter = new CategoryListAdapter(getActivity(), goodsList1);
             recy_home.setAdapter(categoryListAdapter);
             mLinesr.addView(view);
-     //专题列表的跳转监听
-            /* categoryListAdapter.addListClick(new BaseAdapter.IListClick() {
+         //专题精选------居家
+            categoryListAdapter.addListClick(new BaseAdapter.IListClick() {
                 @Override
                 public void itemClick(int pos) {
                     int id = goodsList1.get(pos).getId();
-                    Intent intent = new Intent(getActivity(),);
-                    intent.putExtra("styleId",id);
+                    Intent intent = new Intent(getActivity(), NewShopInfoActivity.class);
+                    intent.putExtra("infoId", id);
                     startActivity(intent);
                 }
-            });*/
+            });
 
         }
     }
@@ -172,6 +172,7 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
         mRecyTit.setAdapter(topicListAdapter);
     }
 
+    // 人气推荐
     private void initHotGoodsList(List<HomeBean.DataBean.HotGoodsListBean> hotGoodsList) {
         mRecyPop.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -180,6 +181,16 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
         HotGoodsAdapter hotGoodsAdapter = new HotGoodsAdapter(getActivity(), hotGoodsList);
 
         mRecyPop.setAdapter(hotGoodsAdapter);
+        hotGoodsAdapter.addListClick(new BaseAdapter.IListClick() {
+            @Override
+            public void itemClick(int pos) {
+                int id = hotGoodsList.get(pos).getId();
+                Intent intent = new Intent(getActivity(), NewShopInfoActivity.class);
+                intent.putExtra("infoId", id);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initGood(List<HomeBean.DataBean.NewGoodsListBean> newGoodsList) {
