@@ -2,7 +2,6 @@ package com.example.bigxun_day01.ui.sort;
 
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,12 +10,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.bigxun_day01.MainActivity;
 import com.example.bigxun_day01.R;
 import com.example.bigxun_day01.adapter.sortadapter.SortFragmentAdapter;
 import com.example.bigxun_day01.base.BaseAdapter;
 import com.example.bigxun_day01.base.BaseFragment;
 import com.example.bigxun_day01.interfaces.ISort;
+import com.example.bigxun_day01.model.sortmodel.InfoTabDataBean;
+import com.example.bigxun_day01.model.sortmodel.VerTabBean;
 import com.example.bigxun_day01.presenter.sorepresent.SrotPresenter;
 import com.example.bigxun_day01.ui.home.lookvideo.LookInfoActivity;
 
@@ -137,7 +137,5 @@ public class SortFragment extends BaseFragment<ISort.Presenter> implements ISort
                 startActivity(intent);
             }
         });
-
-
     }
 }

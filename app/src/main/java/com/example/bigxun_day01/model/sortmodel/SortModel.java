@@ -5,8 +5,6 @@ import com.example.bigxun_day01.interfaces.Callback;
 import com.example.bigxun_day01.interfaces.ISort;
 import com.example.bigxun_day01.net.CommonSubscriber;
 import com.example.bigxun_day01.net.HttpManager;
-import com.example.bigxun_day01.ui.sort.InfoTabDataBean;
-import com.example.bigxun_day01.ui.sort.VerTabBean;
 import com.example.bigxun_day01.utils.RxUtils;
 
 public class SortModel extends BaseModel implements ISort.Model {

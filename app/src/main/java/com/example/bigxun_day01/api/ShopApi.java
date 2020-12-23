@@ -10,13 +10,23 @@ import com.example.bigxun_day01.model.newgoods.NewGoodFristBean;
 import com.example.bigxun_day01.model.newgoods.NewGoodOlderBean;
 import com.example.bigxun_day01.model.newshopinfo.ShopInfoBean;
 import com.example.bigxun_day01.model.newshopinfo.ShopLookAllBean;
-import com.example.bigxun_day01.ui.sort.InfoTabDataBean;
-import com.example.bigxun_day01.ui.sort.VerTabBean;
+import com.example.bigxun_day01.model.logicactivity.LoginDataBean;
+import com.example.bigxun_day01.model.shop.AddCarBean;
+import com.example.bigxun_day01.model.shop.DeleteCarBean;
+import com.example.bigxun_day01.model.shop.ShopCarDataBean;
+import com.example.bigxun_day01.model.shop.UpdateCarBean;
+import com.example.bigxun_day01.model.sortmodel.InfoTabDataBean;
+import com.example.bigxun_day01.model.sortmodel.VerTabBean;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Flowable;
+import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -80,4 +90,34 @@ public interface ShopApi {
 //https://cdplay.cn/api/catalog/current?id=1005001
     @GET("api/catalog/current")
     Flowable<InfoTabDataBean> getTabInfo(@Query("id") int id);
+
+//登录
+    @POST("api/auth/login")
+    @FormUrlEncoded
+    Flowable<LoginDataBean> login(@Field("username")String username,@Field("password") String pwd);
+
+    //注册
+    @POST("")
+    @FormUrlEncoded
+    Flowable<LoginDataBean> register(@FieldMap Map<String,String> map);
+
+    //购物车列表
+    @GET("api/cart/index")
+    Flowable<ShopCarDataBean> getCarList();
+
+    //添加到购物车
+    @POST("api/cart/add")
+    @FormUrlEncoded
+    Flowable<AddCarBean> addCar(@FieldMap Map<String,String> map);
+
+    //更新购物车的数据
+    @POST("api/cart/update")
+    @FormUrlEncoded
+    Flowable<UpdateCarBean> updateCar(@FieldMap Map<String,String> map);
+
+    //删除购物车数据
+    @POST("api/cart/delete")
+    @FormUrlEncoded
+    Flowable<DeleteCarBean> removeCar(@Field("productIds") String productIds);
+
 }

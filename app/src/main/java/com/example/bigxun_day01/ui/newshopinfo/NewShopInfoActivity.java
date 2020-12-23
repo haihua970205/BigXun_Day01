@@ -8,13 +8,17 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebView;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
@@ -23,23 +27,30 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bigxun_day01.MainActivity;
 import com.example.bigxun_day01.R;
 import com.example.bigxun_day01.adapter.newgoods.Car_Product_Adapter;
+import com.example.bigxun_day01.adapter.sortadapter.CategoryBigImageAdapter;
 import com.example.bigxun_day01.base.BaseActivity;
+import com.example.bigxun_day01.base.BaseAdapter;
 import com.example.bigxun_day01.interfaces.newshopinfo.IShopInfo;
 import com.example.bigxun_day01.model.newshopinfo.ShopInfoBean;
 import com.example.bigxun_day01.model.newshopinfo.ShopLookAllBean;
+import com.example.bigxun_day01.model.shop.AddCarBean;
+import com.example.bigxun_day01.model.shop.ShopCarDataBean;
 import com.example.bigxun_day01.presenter.newshopinfo.ShopInfoPresenter;
+import com.example.bigxun_day01.ui.sort.BigImageActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> implements IShopInfo.View {
     @BindView(R.id.banner)
@@ -52,7 +63,6 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
     TextView carRetailPrice;
     @BindView(R.id.txt_assess)
     TextView txtAssess;
-
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
     @BindView(R.id.img_collect)
@@ -77,8 +87,13 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
     LinearLayout llIss;
     @BindView(R.id.rlv_product)
     RecyclerView rlvProduct;
-    @BindView(R.id.webView)
-    WebView webView;
+    @BindView(R.id.mRlv_category_bigimage)
+    RecyclerView mRlvCategoryBigimage;
+    //    @BindView(R.id.webView)
+//    WebView webView;
+    private int num;
+    int buyNumber = 1; //购买的数量
+    private Map<String, String> map;
 
     @Override
     protected int getLayout() {
@@ -110,11 +125,20 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
 
     @Override
     protected void initView() {
-
+        txtAddCar.setTag(0);
+        imgCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewShopInfoActivity.this, MainActivity.class);
+                intent.putExtra("infoId", 3);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     protected void initData() {
+        presenter.getCarList();
         Intent intent = getIntent();
         if (intent.hasExtra("infoId")) {
             int id = intent.getIntExtra("infoId", 0);
@@ -133,8 +157,8 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
         // 商品信息
         initInfo(carBean.getData().getInfo());
 
-        //h5 商品详情
-        initGoodDetail(carBean.getData().getInfo().getGoods_desc());
+//        //h5 商品详情
+//        initGoodDetail(carBean.getData().getInfo().getGoods_desc());
 
         //商品参数
         initattribute(carBean.getData().getAttribute());
@@ -143,14 +167,64 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
         initIssue(carBean.getData().getIssue());
         //底部数据列表
         initProduct(carBean.getData().getProductList());
+        //展示goods_desc
+        showImage(carBean.getData().getInfo().getGoods_desc());
     }
 
-     private void initGoodDetail(String webData) {
+    private void showImage(String goods_desc) {
+        ArrayList<String> listUrl = new ArrayList<>();
+        String img = "<img[\\s\\S]*?>";
+        Pattern pattern = Pattern.compile(img);
+        Matcher matcher = pattern.matcher(goods_desc);
+
+        while (matcher.find()) {
+            String word = matcher.group();
+            int start = word.indexOf("\"") + 1;
+            int end = word.indexOf(".jpg");
+            if (end > 0) {//如果是jpg格式的就截取jpg
+                String url = word.substring(start, end);
+                if (url != null) {
+                    url = url + ".jpg";
+                    listUrl.add(url);
+                } else {
+                    return;
+                }
+            } else {
+                int end1 = word.indexOf(".png");//如果是png格式的就截取png
+                String url = word.substring(start, end1);
+                if (url != null) {
+                    url = url + ".png";
+                    listUrl.add(url);
+                } else {
+                    return;
+                }
+            }
+        }
+        mRlvCategoryBigimage.setLayoutManager(new LinearLayoutManager(this));
+        CategoryBigImageAdapter categoryBigImageAdapter = new CategoryBigImageAdapter(this, listUrl);
+        mRlvCategoryBigimage.setAdapter(categoryBigImageAdapter);
+
+        //点击条目跳转
+        categoryBigImageAdapter.addListClick(new BaseAdapter.IListClick() {
+            @Override
+            public void itemClick(int pos) {
+                Intent intent = new Intent(NewShopInfoActivity.this, BigImageActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("image", listUrl);
+                intent.putExtra("bundle", bundle);
+                intent.putExtra("postion", pos);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    /* private void initGoodDetail(String webData) {
          getHtmlImgs(webData);
          String content = h5.replace("word", webData);
          Log.i("TAG", content);
          webView.loadDataWithBaseURL("about:blank", content, "text/html", "utf-8", null);
-     }
+     }*/
     private void getHtmlImgs(String content) {
         String img = "<img[\\s\\S]*?>";
         Pattern pattern = Pattern.compile(img);
@@ -186,6 +260,65 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
         SpannableStringBuilder builder = new SpannableStringBuilder(s);
         builder.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         carRetailPrice.setText(builder);
+
+
+        txtAddCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int tag = (int) txtAddCar.getTag();
+                if (tag == 0) {
+                    initPop(info);
+                    tag = 1;
+                }
+                if (tag == 1) {
+                    if (map != null) {
+                        presenter.addGoodCar(map);
+                        Log.e("TAG", "onClick: " + map.get("goodsId"));
+                        tag = 0;
+                    }
+                }
+
+            }
+        });
+    }
+
+
+    private void initPop(ShopInfoBean.DataBeanX.InfoBean info) {
+        View view = View.inflate(NewShopInfoActivity.this, R.layout.pop_addcar_item, null);
+        PopupWindow pop = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, 300, true);
+        pop.setBackgroundDrawable(null);
+        pop.showAtLocation(view, Gravity.BOTTOM, 0, 70);
+        ImageView close = view.findViewById(R.id.pop_close);
+        ImageView shop_info = view.findViewById(R.id.pop_image);
+        TextView shop_price = view.findViewById(R.id.pop_price);
+        TextView shop_num = view.findViewById(R.id.pop_shop_num);
+        TextView shop_numLose = view.findViewById(R.id.pop_numLose);
+        TextView shop_numAdd = view.findViewById(R.id.pop_numAdd);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop.dismiss();
+            }
+        });
+        Glide.with(shop_info).load(info.getList_pic_url()).into(shop_info);
+        shop_price.setText(info.getRetail_price() + "");
+        num = 1;
+        shop_numAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                num++;
+                shop_num.setText(num + "");
+            }
+        });
+        shop_numLose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                num--;
+                if (num >= 0) {
+                    shop_num.setText(num + "");
+                }
+            }
+        });
     }
 
 
@@ -219,6 +352,15 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
         }
     }
 
+    //添加购物车返回
+    @Override
+    public void addGoodCarReturn(AddCarBean addCarBean) {
+        //添加成功以后跟新数量显示
+        int number = addCarBean.getData().getCartTotal().getGoodsCount();
+        txtNumber.setText(String.valueOf(number));
+        txtNumber.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void getLookAllReturn(ShopLookAllBean relateBean) {
         List<ShopLookAllBean.DataBean.GoodsListBean> goodsList = relateBean.getData().getGoodsList();
@@ -229,9 +371,22 @@ public class NewShopInfoActivity extends BaseActivity<IShopInfo.Presenter> imple
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    public void getCarListReturn(ShopCarDataBean shopCarDataBean) {
+        if (buyNumber <= 0) {
+            Toast.makeText(NewShopInfoActivity.this, "请添加要购买商品", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (shopCarDataBean.getData().getCartList().size() > 0) {
+            int goodsId = shopCarDataBean.getData().getCartList().get(0).getGoods_id();
+            int productid = shopCarDataBean.getData().getCartList().get(0).getId();
+            map = new HashMap<>();
+            map.put("goodsId", String.valueOf(goodsId));
+            map.put("number", String.valueOf(buyNumber));
+            map.put("productId", String.valueOf(productid));
+//            presenter.addGoodCar(map);
+
+        }
     }
+
+
 }

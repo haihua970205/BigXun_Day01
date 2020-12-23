@@ -1,4 +1,4 @@
-package com.example.bigxun_day01.ui.sort;
+package com.example.bigxun_day01.model.sortmodel;
 
 import java.util.List;
 

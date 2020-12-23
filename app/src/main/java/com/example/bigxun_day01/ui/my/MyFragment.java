@@ -3,17 +3,17 @@ package com.example.bigxun_day01.ui.my;
 
 import com.example.bigxun_day01.R;
 import com.example.bigxun_day01.base.BaseFragment;
-import com.example.bigxun_day01.interfaces.home.IHome;
-import com.example.bigxun_day01.model.home.bean.HomeBean;
+import com.example.bigxun_day01.interfaces.IBasePresenter;
 
-public class MyFragment extends BaseFragment<IHome.Presenter> implements  IHome.View{
+public class MyFragment extends BaseFragment {
+
     @Override
     protected int getLayout() {
         return R.layout.fragment_my;
     }
 
     @Override
-    protected IHome.Presenter createPrenter() {
+    protected IBasePresenter createPrenter() {
         return null;
     }
 
@@ -24,11 +24,6 @@ public class MyFragment extends BaseFragment<IHome.Presenter> implements  IHome.
 
     @Override
     protected void initData() {
-
-    }
-
-    @Override
-    public void getHomeReturn(HomeBean homeBean) {
 
     }
 }

@@ -156,9 +156,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <WebView
+                <androidx.recyclerview.widget.RecyclerView
                     app:layout_constraintLeft_toLeftOf="parent"
-                    android:id="@+id/webView"
+                    android:id="@+id/mRlv_category_bigimage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -241,12 +241,13 @@
             android:layout_height="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/layout_car">
+
             <ImageView
                 android:id="@+id/img_collect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/xing"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@mipmap/xing" />
         </FrameLayout>
         <FrameLayout
             android:id="@+id/layout_car"
@@ -254,12 +255,13 @@
             android:layout_height="match_parent"
             app:layout_constraintLeft_toRightOf="@id/layout_collect"
             app:layout_constraintRight_toLeftOf="@id/txt_buy">
+
             <ImageView
                 android:id="@+id/img_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_menu_shopping_nor"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_menu_shopping_nor" />
             <TextView
                 android:id="@+id/txt_number"
                 android:layout_width="@dimen/sp_15"
@@ -287,7 +289,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="立即购买"
+            android:text="加入购物车"
             android:textSize="@dimen/sp_20"
             app:layout_constraintLeft_toRightOf="@id/txt_buy"
             app:layout_constraintRight_toRightOf="parent"/>

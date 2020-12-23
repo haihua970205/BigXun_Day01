@@ -6,6 +6,10 @@ import com.example.bigxun_day01.interfaces.newshopinfo.IShopInfo;
 import com.example.bigxun_day01.model.newshopinfo.ShopInfoBean;
 import com.example.bigxun_day01.model.newshopinfo.ShopInfoModel;
 import com.example.bigxun_day01.model.newshopinfo.ShopLookAllBean;
+import com.example.bigxun_day01.model.shop.AddCarBean;
+import com.example.bigxun_day01.model.shop.ShopCarDataBean;
+
+import java.util.Map;
 
 public class ShopInfoPresenter extends BasePresenter<IShopInfo.View> implements IShopInfo.Presenter {
 
@@ -48,4 +52,40 @@ public class ShopInfoPresenter extends BasePresenter<IShopInfo.View> implements 
             }
         });
     }
+
+    // 添加到购物车
+    @Override
+    public void addGoodCar(Map<String, String> map) {
+        model.addGoodCar(map, new Callback<AddCarBean>() {
+            @Override
+            public void success(AddCarBean data) {
+                if(mView != null){
+                    mView.addGoodCarReturn(data);
+                }
+            }
+
+            @Override
+            public void fail(String err) {
+
+            }
+        });
+    }
+
+    @Override
+    public void getCarList() {
+        model.getCarList(new Callback<ShopCarDataBean>() {
+            @Override
+            public void success(ShopCarDataBean data) {
+                if (mView != null){
+                    mView.getCarListReturn(data);
+                }
+            }
+
+            @Override
+            public void fail(String err) {
+
+            }
+        });
+    }
+
 }

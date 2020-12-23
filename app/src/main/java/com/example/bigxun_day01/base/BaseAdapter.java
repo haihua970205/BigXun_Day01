@@ -1,5 +1,6 @@
 package com.example.bigxun_day01.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ public abstract class BaseAdapter<D> extends RecyclerView.Adapter {
     List<D> mData; //adapter的数据
     protected Context context;
     protected IListClick click;
+    protected Activity activity;
 
     protected IItemViewClick iItemViewClick;
 
@@ -24,6 +26,11 @@ public abstract class BaseAdapter<D> extends RecyclerView.Adapter {
     }
 
     public BaseAdapter(Context context, List<D> data){
+        this(context,data,null);
+    }
+
+    public BaseAdapter(Context context,List<D> data,Activity activity){
+        this.activity = activity;
         this.context = context;
         mData = data;
     }
@@ -85,7 +92,7 @@ public abstract class BaseAdapter<D> extends RecyclerView.Adapter {
 
     public interface IItemViewClick<D>{
         //条目中的元素点击
-        void itemViewClick(int viewid, D data);
+        void itemViewClick(int viewid,D data);
     }
 
 
@@ -108,6 +115,4 @@ public abstract class BaseAdapter<D> extends RecyclerView.Adapter {
         }
 
     }
-
-
 }

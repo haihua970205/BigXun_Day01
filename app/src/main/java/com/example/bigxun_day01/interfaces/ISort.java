@@ -2,8 +2,9 @@ package com.example.bigxun_day01.interfaces;
 
 import com.example.bigxun_day01.interfaces.home.IHome;
 import com.example.bigxun_day01.model.home.bean.HomeBean;
-import com.example.bigxun_day01.ui.sort.InfoTabDataBean;
-import com.example.bigxun_day01.ui.sort.VerTabBean;
+import com.example.bigxun_day01.model.sortmodel.InfoTabDataBean;
+import com.example.bigxun_day01.model.sortmodel.VerTabBean;
+
 
 public interface ISort {
     interface View extends IBaseView {

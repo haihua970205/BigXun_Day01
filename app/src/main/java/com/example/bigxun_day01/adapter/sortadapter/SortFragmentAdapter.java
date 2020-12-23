@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.bigxun_day01.R;
 import com.example.bigxun_day01.base.BaseAdapter;
-import com.example.bigxun_day01.ui.sort.InfoTabDataBean;
+import com.example.bigxun_day01.model.sortmodel.InfoTabDataBean;
 import com.example.bigxun_day01.utils.TxtUtils;
 
 import java.util.List;

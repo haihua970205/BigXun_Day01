@@ -1,5 +1,6 @@
 package com.example.bigxun_day01;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -95,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
         homeTab.getTabAt(2).setText("分类").setIcon(R.mipmap.ic_menu_sort_pressed);
         homeTab.getTabAt(3).setText("购物车").setIcon(R.mipmap.ic_menu_shopping_pressed);
         homeTab.getTabAt(4).setText("我的").setIcon(R.mipmap.ic_menu_me_pressed);
+
+        Intent intent = getIntent();
+        if (intent.hasExtra("infoId")){
+            int infoId = intent.getIntExtra("infoId", 0);
+            homeVp.setCurrentItem(infoId);
+        }
 
     }
 }

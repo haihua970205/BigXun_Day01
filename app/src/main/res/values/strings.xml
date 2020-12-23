@@ -11,4 +11,11 @@
     <string name="title_car_specs">请选择规格数量</string>
     <string name="title_car_assess">评价</string>
     <string name="title_car_lookall">查看全部</string>
+
+    <string name="shop_username">请输入用户名</string>
+    <string name="shop_pwd">请输入密码</string>
+
+    <string name="tv3">30天无忧退货</string>
+    <string name="tv4">48小时快速退款</string>
+    <string name="tv5">满88元免邮费</string>
 </resources>
